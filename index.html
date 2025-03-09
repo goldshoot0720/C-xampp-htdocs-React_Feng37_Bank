@@ -127,6 +127,7 @@
               icon: "error",
             });
           } else {
+	    localStorage.setItem("userName", this.state.user_name);
             const userName = this.state.user_name;
 
             fetch("LoadData.php", {
