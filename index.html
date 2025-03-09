@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>React_鋒兄三七_銀行</title>
 
     <!-- 引入 React -->
@@ -10,134 +11,272 @@
 
     <!-- 引入 Babel -->
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 引入 bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 引入 Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- 引入 SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
   </head>
   <body>
     <div id="root"></div>
     <script type="text/babel">
-	class Feng37 extends React.Component{
-        	constructor(props){
-			super(props)
-			this.state = {
-				bank_savings: Array(10).fill(0),
-				saving:"",
-				selectedIndex:0,
-				sum_saving:"",
-				user_name:""
-			}
-		}
-  		componentDidMount() {
-			this.setState({ saving:this.state.bank_savings[0],selectedIndex: 0 });
-        		let updatedSavings = [...this.state.bank_savings];
-			this.setState({ sum_saving: updatedSavings.reduce((sum,num)=>parseInt(sum)+parseInt(num))});
-			if (localStorage.getItem("userName")!=null){
-				this.setState({user_name:localStorage.getItem("userName")});
-			}	
+      class Feng37 extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            bank_savings: Array(10).fill(0),
+            saving: "",
+            selectedIndex: 0,
+            sum_saving: "",
+            user_name: "",
+          };
+        }
 
-  		}
-		Select_Onchange = (e) => {
-			let selectedIndex = e.target.selectedIndex;
-			this.setState({ saving:this.state.bank_savings[selectedIndex],selectedIndex: selectedIndex });
-		}
-		Input_Onchange = (e) => {
-    			let value = e.target.value;
-			this.setState({ saving: value });
-			if ( value === "" ){
-			}
-    			else if (isNaN(value) || value.includes(".") || !Number.isInteger(Number(value))) {
-        			this.setState({ sum_saving: "請輸入正整數或零" });
-				this.setState({ saving: 0 });
-        			let updatedSavings = [...this.state.bank_savings];
-        			updatedSavings[this.state.selectedIndex] = 0;
-        			this.setState({ bank_savings: updatedSavings});		
-			
-    			}
-			else{	
-        			let updatedSavings = [...this.state.bank_savings];
-        			updatedSavings[this.state.selectedIndex] = value;
-        			this.setState({ bank_savings: updatedSavings,});	
-				this.setState({ sum_saving: updatedSavings.reduce((sum,num)=>parseInt(sum)+parseInt(num))});	
-			}
-		}
-		Input_User_Name_Onchange = (e) => {
-    			let value = e.target.value;
-			this.setState({ user_name: value });
-		}
-                Button_Click1 = () => {
-			this.setState({ sum_saving: this.Sum_Of_Saving()});
-		}
-                Button_Click2 = () => {
-			if ( this.state.user_name===""){
-				Swal.fire({
-  					title: "存檔",
-  					html: "臨時使用者名稱不得為空值",
-  					icon: "success",
-				});				
-			}
-			else{
-				localStorage.setItem("userName", this.state.user_name);
-			}
-		}
-                Button_Click3 = () => {
-			Swal.fire({
-  				title: "㊣",
-  				html: "委任第五職等<br>簡任第十二職等<br>第12屆臺北市長<br>第23任總統<br>中央銀行鋒兄分行",
-  				icon: "success",
-			});
-		}		
-		render(){
-			return (      // React 的 JSX 程式碼
-        <div className="container-fluid p-1 bg-primary text-white text-center">
-        <h1><span style={{color:'yellow'}}>React_鋒兄三七_銀行</span></h1>
-        <h3><label htmlFor="tempUserName">臨時使用者名稱：</label></h3>
-	<input type="text" value={this.state.user_name} id="UserName" name="UserName" required minLength="1" maxLength="10" size="10" onChange={this.Input_User_Name_Onchange}/>
+        componentDidMount() {
+          this.setState({ saving: this.state.bank_savings[0], selectedIndex: 0 });
+          let updatedSavings = [...this.state.bank_savings];
+          this.setState({
+            sum_saving: updatedSavings.reduce(
+              (sum, num) => parseInt(sum) + parseInt(num),
+              0
+            ),
+          });
+          if (localStorage.getItem("userName") != null) {
+            this.setState({ user_name: localStorage.getItem("userName") });
+          }
+        }
 
-        <h3><label htmlFor="financial_institution">金融機構：</label></h3>
-        <h3>
-      <select id="financial_institution" onChange={this.Select_Onchange}>
-	<optgroup label="泛公股：">
-	<option>(006)合作金庫(5880)</option>
-    	<option>(017)兆豐銀行(2886)</option>
-        </optgroup>
-	<optgroup label="民營銀行：">
-    	<option>(013)國泰世華(2882)</option>
-    	<option>(048)王道銀行(2897)</option>
-    	<option>(103)新光銀行(2888)</option>
-	<option>(808)玉山銀行(2884)</option>
-    	<option>(812)台新銀行(2887)</option>
-    	<option>(822)中國信託(2891)</option>
-        </optgroup>
-	<optgroup label="郵局：">
-    	<option>(700)中華郵政</option>
-        </optgroup>
-	<optgroup label="電子支付：">
-	<option>(396)街口支付(6038)</option>
-        </optgroup>
-	</select>
-        </h3>
-	<h3><label htmlFor="saving">存款金額：</label></h3>
-        <input type="text" value={this.state.saving} id="saving" name="saving" required minLength="1" maxLength="10" size="10" onChange={this.Input_Onchange}/>
-      	<h3><label htmlFor="sum_saving">累積存款：</label></h3>  
-        <h3><label id="sum_saving"><span style={{ color: 'yellow' }}>{this.state.sum_saving}</span></label></h3> 
-        <h3>
-	<button type="button" className="btn btn-primary" data-bs-toggle="tooltip" onClick={this.Button_Click1}>讀檔</button>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<button type="button" className="btn btn-primary" data-bs-toggle="tooltip" onClick={this.Button_Click2}>存檔</button>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<button type="button" className="btn btn-primary" data-bs-toggle="tooltip" onClick={this.Button_Click3}>彩蛋</button>
-        </h3>
-        </div>)
-		}
-	}
+        Select_Onchange = (e) => {
+          let selectedIndex = e.target.selectedIndex;
+          this.setState({ saving: this.state.bank_savings[selectedIndex], selectedIndex: selectedIndex });
+        };
 
-       ReactDOM.render(<Feng37/>,document.getElementById('root'));
+        Input_Onchange = (e) => {
+          let value = e.target.value;
+          this.setState({ saving: value });
+          if (value === "") {
+            // Do nothing
+          } else if (isNaN(value) || value.includes(".") || !Number.isInteger(Number(value))) {
+            this.setState({ sum_saving: "請輸入正整數或零" });
+            this.setState({ saving: 0 });
+            let updatedSavings = [...this.state.bank_savings];
+            updatedSavings[this.state.selectedIndex] = 0;
+            this.setState({ bank_savings: updatedSavings });
+          } else {
+            let updatedSavings = [...this.state.bank_savings];
+            updatedSavings[this.state.selectedIndex] = value;
+            this.setState({ bank_savings: updatedSavings });
+            this.setState({
+              sum_saving: updatedSavings.reduce((sum, num) => parseInt(sum) + parseInt(num)),
+            });
+          }
+        };
 
+        Input_User_Name_Onchange = (e) => {
+          let value = e.target.value;
+          this.setState({ user_name: value });
+        };
+
+        Button_Click1 = () => {
+          if (this.state.user_name === "") {
+            Swal.fire({
+              title: "讀檔",
+              html: "臨時使用者名稱不得為空值",
+              icon: "error",
+            });
+          } else {
+            const userName = this.state.user_name;
+
+            fetch("LoadData.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: new URLSearchParams({
+                userName: userName,
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+		if (data.success) {
+  		  const updatedSavings = data.bankSavings;
+  		  // 更新 bank_savings 和 sum_saving
+  		  this.setState({
+    		  bank_savings: updatedSavings,
+    		  sum_saving: updatedSavings.reduce((sum, num) => sum + parseInt(num), 0), // 更新累積存款
+    		  saving: updatedSavings[this.state.selectedIndex], // 根據當前索引設置顯示的存款
+  		  });
+	        } else {
+                  Swal.fire({
+                    title: "錯誤",
+                    text: "無法讀取該使用者的資料",
+                    icon: "error",
+                  });
+                }
+              })
+              .catch((error) => {
+                Swal.fire({
+                  title: "錯誤",
+                  text: "無法連接到伺服器",
+                  icon: "error",
+                });
+              });
+          }
+        };
+
+        Button_Click2 = () => {
+          if (this.state.user_name === "") {
+            Swal.fire({
+              title: "存檔",
+              html: "臨時使用者名稱不得為空值",
+              icon: "error",
+            });
+          } else {
+            localStorage.setItem("userName", this.state.user_name);
+
+            const userName = this.state.user_name;
+            const bankSavings = this.state.bank_savings;
+
+            fetch("SaveData.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: new URLSearchParams({
+                userName: userName,
+                bankSavings: JSON.stringify(bankSavings), // 將存款資料轉換為 JSON 格式
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  Swal.fire({
+                    title: "成功",
+                    text: "資料已成功儲存",
+                    icon: "success",
+                  });
+                } else {
+                  Swal.fire({
+                    title: "錯誤",
+                    text: "儲存資料時發生錯誤",
+                    icon: "error",
+                  });
+                }
+              })
+              .catch((error) => {
+                Swal.fire({
+                  title: "錯誤",
+                  text: "無法連接到伺服器",
+                  icon: "error",
+                });
+              });
+          }
+        };
+
+        Button_Click3 = () => {
+          Swal.fire({
+            title: "㊣",
+            html:
+              "委任第五職等<br>簡任第十二職等<br>第12屆臺北市長<br>第23任總統<br>中央銀行鋒兄分行",
+            icon: "success",
+          });
+        };
+
+        render() {
+          return (
+            <div className="container-fluid p-1 bg-primary text-white text-center">
+              <h1>
+                <span style={{ color: "yellow" }}>React_鋒兄三七_銀行</span>
+              </h1>
+              <h3>
+                <label htmlFor="tempUserName">臨時使用者名稱：</label>
+              </h3>
+              <input
+                type="text"
+                value={this.state.user_name}
+                id="UserName"
+                name="UserName"
+                required
+                minLength="1"
+                maxLength="10"
+                size="10"
+                onChange={this.Input_User_Name_Onchange}
+              />
+
+              <h3>
+                <label htmlFor="financial_institution">金融機構：</label>
+              </h3>
+              <h3>
+                <select id="financial_institution" onChange={this.Select_Onchange}>
+                  <optgroup label="泛公股：">
+                    <option>(006)合作金庫(5880)</option>
+                    <option>(017)兆豐銀行(2886)</option>
+                  </optgroup>
+                  <optgroup label="民營銀行：">
+                    <option>(013)國泰世華(2882)</option>
+                    <option>(048)王道銀行(2897)</option>
+                    <option>(103)新光銀行(2888)</option>
+                    <option>(808)玉山銀行(2884)</option>
+                    <option>(812)台新銀行(2887)</option>
+                    <option>(822)中國信託(2891)</option>
+                  </optgroup>
+                  <optgroup label="郵局：">
+                    <option>(700)中華郵政</option>
+                  </optgroup>
+                  <optgroup label="電子支付：">
+                    <option>(396)街口支付(6038)</option>
+                  </optgroup>
+                </select>
+              </h3>
+
+              <h3>
+                <label htmlFor="saving">存款金額：</label>
+              </h3>
+              <input
+                type="text"
+                value={this.state.saving}
+                id="saving"
+                name="saving"
+                required
+                minLength="1"
+                maxLength="10"
+                size="10"
+                onChange={this.Input_Onchange}
+              />
+
+              <h3>
+                <label htmlFor="sum_saving">累積存款：</label>
+              </h3>
+              <h3>
+                <label id="sum_saving">
+                  <span style={{ color: "yellow" }}>{this.state.sum_saving}</span>
+                </label>
+              </h3>
+
+              <h3>
+                <button type="button" className="btn btn-primary" data-bs-toggle="tooltip" onClick={this.Button_Click1}>
+                  讀檔
+                </button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" className="btn btn-primary" data-bs-toggle="tooltip" onClick={this.Button_Click2}>
+                  存檔
+                </button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" className="btn btn-primary" data-bs-toggle="tooltip" onClick={this.Button_Click3}>
+                  彩蛋
+                </button>
+              </h3>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<Feng37 />, document.getElementById("root"));
     </script>
   </body>
 </html>
