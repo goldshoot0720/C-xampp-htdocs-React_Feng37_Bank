@@ -48,6 +48,43 @@
           });
           if (localStorage.getItem("userName") != null) {
             this.setState({ user_name: localStorage.getItem("userName") });
+
+    	    const userName = localStorage.getItem("userName");
+    	    fetch("LoadData.php", {
+    	    method: "POST",
+    	    headers: {
+    	    "Content-Type": "application/x-www-form-urlencoded",
+    	    },
+    	    body: new URLSearchParams({
+    	    userName: userName,
+    	    }),
+    	    })
+    	    .then((response) => response.json())
+    	    .then((data) => {
+    	    if (data.success) {
+    	    const updatedSavings = data.bankSavings;
+    	    // 更新 bank_savings 和 sum_saving
+    	    this.setState({
+            bank_savings: updatedSavings,
+            sum_saving: updatedSavings.reduce((sum, num) => sum + parseInt(num), 0),
+            saving: updatedSavings[this.state.selectedIndex],
+          });
+        } else {
+          Swal.fire({
+            title: "錯誤",
+            text: "無法讀取該使用者的資料",
+            icon: "error",
+          });
+        }
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "錯誤",
+          text: "無法連接到伺服器",
+          icon: "error",
+        });
+      });
+  
           }
         }
 
