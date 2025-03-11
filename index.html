@@ -22,6 +22,7 @@
     <!-- 引入 SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
+
   <body>
     <div id="root"></div>
     <script type="text/babel">
@@ -38,7 +39,10 @@
         }
 
         componentDidMount() {
-          this.setState({ saving: this.state.bank_savings[0], selectedIndex: 0 });
+          this.setState({
+            saving: this.state.bank_savings[0],
+            selectedIndex: 0,
+          });
           let updatedSavings = [...this.state.bank_savings];
           this.setState({
             sum_saving: updatedSavings.reduce(
@@ -49,48 +53,53 @@
           if (localStorage.getItem("userName") != null) {
             this.setState({ user_name: localStorage.getItem("userName") });
 
-    	    const userName = localStorage.getItem("userName");
-    	    fetch("LoadData.php", {
-    	    method: "POST",
-    	    headers: {
-    	    "Content-Type": "application/x-www-form-urlencoded",
-    	    },
-    	    body: new URLSearchParams({
-    	    userName: userName,
-    	    }),
-    	    })
-    	    .then((response) => response.json())
-    	    .then((data) => {
-    	    if (data.success) {
-    	    const updatedSavings = data.bankSavings;
-    	    // 更新 bank_savings 和 sum_saving
-    	    this.setState({
-            bank_savings: updatedSavings,
-            sum_saving: updatedSavings.reduce((sum, num) => sum + parseInt(num), 0),
-            saving: updatedSavings[this.state.selectedIndex],
-          });
-        } else {
-          Swal.fire({
-            title: "錯誤",
-            text: "無法讀取該使用者的資料",
-            icon: "error",
-          });
-        }
-      })
-      .catch((error) => {
-        Swal.fire({
-          title: "錯誤",
-          text: "無法連接到伺服器",
-          icon: "error",
-        });
-      });
-  
+            const userName = localStorage.getItem("userName");
+            fetch("LoadData.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: new URLSearchParams({
+                userName: userName,
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  const updatedSavings = data.bankSavings;
+                  // 更新 bank_savings 和 sum_saving
+                  this.setState({
+                    bank_savings: updatedSavings,
+                    sum_saving: updatedSavings.reduce(
+                      (sum, num) => sum + parseInt(num),
+                      0
+                    ),
+                    saving: updatedSavings[this.state.selectedIndex],
+                  });
+                } else {
+                  Swal.fire({
+                    title: "錯誤",
+                    text: "無法讀取該使用者的資料",
+                    icon: "error",
+                  });
+                }
+              })
+              .catch((error) => {
+                Swal.fire({
+                  title: "錯誤",
+                  text: "無法連接到伺服器",
+                  icon: "error",
+                });
+              });
           }
         }
 
         Select_Onchange = (e) => {
           let selectedIndex = e.target.selectedIndex;
-          this.setState({ saving: this.state.bank_savings[selectedIndex], selectedIndex: selectedIndex });
+          this.setState({
+            saving: this.state.bank_savings[selectedIndex],
+            selectedIndex: selectedIndex,
+          });
         };
 
         Input_Onchange = (e) => {
@@ -98,7 +107,11 @@
           this.setState({ saving: value });
           if (value === "") {
             // Do nothing
-          } else if (isNaN(value) || value.includes(".") || !Number.isInteger(Number(value))) {
+          } else if (
+            isNaN(value) ||
+            value.includes(".") ||
+            !Number.isInteger(Number(value))
+          ) {
             this.setState({ sum_saving: "請輸入正整數或零" });
             this.setState({ saving: 0 });
             let updatedSavings = [...this.state.bank_savings];
@@ -109,7 +122,9 @@
             updatedSavings[this.state.selectedIndex] = value;
             this.setState({ bank_savings: updatedSavings });
             this.setState({
-              sum_saving: updatedSavings.reduce((sum, num) => parseInt(sum) + parseInt(num)),
+              sum_saving: updatedSavings.reduce(
+                (sum, num) => parseInt(sum) + parseInt(num)
+              ),
             });
           }
         };
@@ -127,7 +142,7 @@
               icon: "error",
             });
           } else {
-	    localStorage.setItem("userName", this.state.user_name);
+            localStorage.setItem("userName", this.state.user_name);
             const userName = this.state.user_name;
 
             fetch("LoadData.php", {
@@ -141,15 +156,18 @@
             })
               .then((response) => response.json())
               .then((data) => {
-		if (data.success) {
-  		  const updatedSavings = data.bankSavings;
-  		  // 更新 bank_savings 和 sum_saving
-  		  this.setState({
-    		  bank_savings: updatedSavings,
-    		  sum_saving: updatedSavings.reduce((sum, num) => sum + parseInt(num), 0), // 更新累積存款
-    		  saving: updatedSavings[this.state.selectedIndex], // 根據當前索引設置顯示的存款
-  		  });
-	        } else {
+                if (data.success) {
+                  const updatedSavings = data.bankSavings;
+                  // 更新 bank_savings 和 sum_saving
+                  this.setState({
+                    bank_savings: updatedSavings,
+                    sum_saving: updatedSavings.reduce(
+                      (sum, num) => sum + parseInt(num),
+                      0
+                    ), // 更新累積存款
+                    saving: updatedSavings[this.state.selectedIndex], // 根據當前索引設置顯示的存款
+                  });
+                } else {
                   Swal.fire({
                     title: "錯誤",
                     text: "無法讀取該使用者的資料",
@@ -219,8 +237,7 @@
         Button_Click3 = () => {
           Swal.fire({
             title: "㊣",
-            html:
-              "委任第五職等<br>簡任第十二職等<br>第12屆臺北市長<br>第23任總統<br>中央銀行鋒兄分行",
+            html: "委任第五職等<br>簡任第十二職等<br>第12屆臺北市長<br>第23任總統<br>中央銀行鋒兄分行",
             icon: "success",
           });
         };
@@ -245,12 +262,14 @@
                 size="10"
                 onChange={this.Input_User_Name_Onchange}
               />
-
               <h3>
                 <label htmlFor="financial_institution">金融機構：</label>
               </h3>
               <h3>
-                <select id="financial_institution" onChange={this.Select_Onchange}>
+                <select
+                  id="financial_institution"
+                  onChange={this.Select_Onchange}
+                >
                   <optgroup label="泛公股：">
                     <option>(006)合作金庫(5880)</option>
                     <option>(017)兆豐銀行(2886)</option>
@@ -271,10 +290,11 @@
                   </optgroup>
                 </select>
               </h3>
-
               <h3>
                 <label htmlFor="saving">存款金額：</label>
               </h3>
+              <img src="PiggyBank.png" width="87" height="89.1" />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <input
                 type="text"
                 value={this.state.saving}
@@ -286,26 +306,43 @@
                 size="10"
                 onChange={this.Input_Onchange}
               />
-
               <h3>
                 <label htmlFor="sum_saving">累積存款：</label>
               </h3>
               <h3>
                 <label id="sum_saving">
-                  <span style={{ color: "yellow" }}>{this.state.sum_saving}</span>
+                  <img src="YuShan.png" width="86.1" height="70.1" />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <span style={{ color: "yellow" }}>
+                    {this.state.sum_saving}
+                  </span>
                 </label>
               </h3>
-
               <h3>
-                <button type="button" className="btn btn-primary" data-bs-toggle="tooltip" onClick={this.Button_Click1}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-bs-toggle="tooltip"
+                  onClick={this.Button_Click1}
+                >
                   讀檔
                 </button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" className="btn btn-primary" data-bs-toggle="tooltip" onClick={this.Button_Click2}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-bs-toggle="tooltip"
+                  onClick={this.Button_Click2}
+                >
                   存檔
                 </button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" className="btn btn-primary" data-bs-toggle="tooltip" onClick={this.Button_Click3}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-bs-toggle="tooltip"
+                  onClick={this.Button_Click3}
+                >
                   彩蛋
                 </button>
               </h3>
