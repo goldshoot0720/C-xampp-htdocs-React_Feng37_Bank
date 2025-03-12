@@ -138,11 +138,13 @@ function Feng37() {
   return (
     <div className="container mx-auto p-4 bg-blue-500 text-white text-center rounded-lg shadow-lg">
       <h1 className="text-3xl font-bold text-yellow-300">
-        React_鋒兄三七_銀行
+        <i className="fas fa-university"></i> React_鋒兄三七_銀行
       </h1>
 
       <div className="mt-4">
-        <h3>臨時使用者名稱：</h3>
+        <h3>
+          <i className="fas fa-user"></i> 臨時使用者名稱：
+        </h3>
         <input
           type="text"
           value={userName}
@@ -155,7 +157,9 @@ function Feng37() {
       </div>
 
       <div className="mt-4">
-        <h3>金融機構：</h3>
+        <h3>
+          <i className="fas fa-building"></i> 金融機構：
+        </h3>
         <select
           className="p-2 rounded text-black"
           onChange={handleSelectChange}
@@ -182,12 +186,11 @@ function Feng37() {
       </div>
 
       <div className="flex flex-col items-center space-y-4">
-        {/* 存款金額標題置中 */}
-        <h3 className="text-lg text-center">存款金額：</h3>
+        <h3 className="text-lg text-center">
+          <i className="fas fa-coins"></i> 存款金額：
+        </h3>
 
-        {/* 第二行：圖片和輸入框水平置中 */}
         <div className="flex items-center space-x-4">
-          <img src="PiggyBank.png" width="87" height="89.1" />
           <input
             type="text"
             value={saving}
@@ -198,27 +201,31 @@ function Feng37() {
       </div>
 
       <div className="mt-4 flex flex-col items-center space-y-4">
-        {/* 累積存款標題置中 */}
-        <h3 className="text-lg text-center">累積存款：</h3>
+        <h3 className="text-lg text-center">
+          <i className="fas fa-piggy-bank"></i> 累積存款：
+        </h3>
 
-        {/* 第二行：圖片和金額水平置中 */}
         <div className="flex items-center space-x-4">
-          <img src="YuShan.png" width="86.1" height="70.1" />
           <span className="text-yellow-300 text-2xl">{sumSaving}</span>
         </div>
       </div>
       <div className="mt-4 space-x-4">
         <button className="p-2 bg-blue-700 rounded" onClick={handleLoadData}>
-          讀檔
+          <i className="fas fa-folder-open"></i> 讀檔
         </button>
         <button className="p-2 bg-blue-700 rounded" onClick={handleSaveData}>
-          存檔
+          <i className="fas fa-save"></i> 存檔
         </button>
         <button className="p-2 bg-blue-700 rounded" onClick={handleEgg}>
-          彩蛋
+          <i className="fas fa-gift"></i> 彩蛋
         </button>
       </div>
+<div className="mt-4 flex justify-center items-center space-x-4">
+  <img src="YuShan.webp" width="87" height="89" />
+  <img src="PiggyBank.webp" width="87" height="89" />
+</div>
     </div>
+
   );
 }
 
