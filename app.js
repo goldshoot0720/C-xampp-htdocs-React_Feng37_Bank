@@ -221,8 +221,8 @@ function Feng37() {
         </button>
       </div>
 <div className="mt-4 flex justify-center items-center space-x-4">
-  <img src="YuShan.webp" width="87" height="89" />
-  <img src="PiggyBank.webp" width="87" height="89" />
+  <img src="YuShan.webp" width="60" height="60" />
+  <img src="PiggyBank.webp" width="60" height="60" />
 </div>
     </div>
 
