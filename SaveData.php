@@ -1,9 +1,9 @@
 <?php
 // 連接資料庫
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "feng37bank";
+$servername = "sql301.infinityfree.com";
+$username = "if0_38435166";
+$password = "gf0Tagood129";
+$dbname = "if0_38435166_feng37bank";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

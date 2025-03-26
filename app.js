@@ -164,24 +164,16 @@ function Feng37() {
           className="p-2 rounded text-black"
           onChange={handleSelectChange}
         >
-          <optgroup label="泛公股：">
             <option>(006)合作金庫(5880)</option>
-            <option>(017)兆豐銀行(2886)</option>
-          </optgroup>
-          <optgroup label="民營銀行：">
+            <option>(012)台北富邦(2881)</option>
             <option>(013)國泰世華(2882)</option>
+            <option>(017)兆豐銀行(2886)</option>
             <option>(048)王道銀行(2897)</option>
             <option>(103)新光銀行(2888)</option>
+            <option>(700)中華郵政</option>
             <option>(808)玉山銀行(2884)</option>
             <option>(812)台新銀行(2887)</option>
             <option>(822)中國信託(2891)</option>
-          </optgroup>
-          <optgroup label="郵局：">
-            <option>(700)中華郵政</option>
-          </optgroup>
-          <optgroup label="電子支付：">
-            <option>(396)街口支付(6038)</option>
-          </optgroup>
         </select>
       </div>
 
